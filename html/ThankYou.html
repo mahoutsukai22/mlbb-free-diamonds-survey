@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You &mdash; MLBB Player Survey</title>
+  <style>
+    :root {
+      --bg: #0a0e27;
+      --bg-glow-1: #16215c;
+      --panel: #121a3d;
+      --panel-alt: #0e1533;
+      --gold: #ffcc33;
+      --gold-dark: #d9a300;
+      --blue: #12a5df;
+      --blue-bright: #35c3ff;
+      --text: #eef2ff;
+      --muted: #93a0c4;
+      --line: rgba(255, 255, 255, .1);
+      --success-border: #4cd137;
+      --success-text: #9df0a8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(1200px 500px at 15% -10%, var(--bg-glow-1), transparent 60%),
+        radial-gradient(900px 400px at 110% 10%, #221a4d, transparent 55%),
+        var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    .card {
+      position: relative;
+      width: min(520px, calc(100% - 32px));
+      margin: 40px auto;
+      background: linear-gradient(180deg, var(--panel), var(--panel-alt));
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 40px 32px 34px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--blue), var(--gold));
+    }
+
+    .emblem {
+      width: 46px;
+      height: 46px;
+      margin: 0 auto 18px;
+      position: relative;
+    }
+
+    .emblem span {
+      position: absolute;
+      width: 26px;
+      height: 26px;
+      transform: rotate(45deg);
+      border-radius: 4px;
+    }
+
+    .emblem .d1 {
+      background: linear-gradient(135deg, var(--blue-bright), #1568a8);
+      top: 2px;
+      left: 2px;
+    }
+
+    .emblem .d2 {
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      top: 14px;
+      left: 14px;
+      opacity: .92;
+    }
+
+    .check {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      background: rgba(76, 209, 55, .14);
+      border: 1px solid var(--success-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .check svg {
+      width: 30px;
+      height: 30px;
+    }
+
+    h1 {
+      margin: 0 0 10px;
+      font-size: 26px;
+      letter-spacing: .3px;
+      background: linear-gradient(90deg, var(--gold), #fff2c4 45%, var(--blue-bright));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    p.msg {
+      margin: 0 0 26px;
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    a.home-link {
+      display: inline-block;
+      border: 1px solid var(--gold-dark);
+      border-radius: 5px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+      color: #26210a;
+      cursor: pointer;
+      font: 700 14px Arial, Helvetica, sans-serif;
+      letter-spacing: .3px;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 10px 22px;
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+
+    a.home-link:hover {
+      box-shadow: 0 0 16px rgba(255, 204, 51, .5);
+      transform: translateY(-1px);
+    }
+
+    footer {
+      margin: 18px 0 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    footer a {
+      color: var(--blue-bright);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="card">
+      <div class="emblem" aria-hidden="true">
+        <span class="d1"></span>
+        <span class="d2"></span>
+      </div>
+
+      <div class="check" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 13l4 4L19 7" stroke="#9df0a8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <h1>Thanks for Answering!</h1>
+      <p class="msg">Your responses have been recorded. We appreciate you taking the time to help us understand the Land of Dawn community.</p>
+
+      <a class="home-link" href="LandingPage.html">Back to Home</a>
+    </div>
+  </main>
+
+  <footer>
+    Powered by <a href="https://www.surveypie.com/">SurveyPie</a>
+  </footer>
+</body>
+</html>

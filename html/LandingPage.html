@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Diamonds</title>
+
+  <style>
+    :root {
+      --page: #e9e9e9;
+      --panel: #ffffff;
+      --blue: #3b82c4;
+      --blue-dark: #2f6da5;
+      --text: #111827;
+      --muted: #667085;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+
+      background:
+        radial-gradient(
+          circle at 20% 20%,
+          rgba(78, 190, 240, 0.15),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 80% 80%,
+          rgba(59, 130, 196, 0.12),
+          transparent 30%
+        ),
+        var(--page);
+
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .site {
+      width: min(850px, calc(100% - 32px));
+    }
+
+    /* MAIN CARD */
+
+    .landing {
+      background: var(--panel);
+
+      border-radius: 8px;
+
+      box-shadow:
+        0 3px 18px rgba(0, 0, 0, 0.12);
+
+      overflow: hidden;
+    }
+
+    /* HERO */
+
+    .hero {
+      min-height: 500px;
+
+      display: flex;
+      flex-direction: column;
+
+      align-items: center;
+      justify-content: center;
+
+      text-align: center;
+
+      padding: 60px 30px;
+
+      background:
+        linear-gradient(
+          145deg,
+          #f8fdff,
+          #e5f6ff
+        );
+    }
+
+    /* DIAMOND */
+
+    .diamond {
+      position: relative;
+
+      width: 135px;
+      height: 135px;
+
+      margin-bottom: 35px;
+
+      transform: rotate(45deg);
+
+      border-radius: 20px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #e7fbff 0%,
+          #9ce5fa 35%,
+          #4fc3f7 70%,
+          #2589c7 100%
+        );
+
+      border: 2px solid #8bdcf8;
+
+      box-shadow:
+        0 15px 35px rgba(37, 137, 199, 0.25);
+    }
+
+    /* Diamond highlight */
+
+    .diamond::before {
+      content: "";
+
+      position: absolute;
+
+      width: 55px;
+      height: 55px;
+
+      top: 15px;
+      left: 15px;
+
+      background: rgba(255,255,255,0.45);
+
+      clip-path: polygon(
+        50% 0%,
+        100% 50%,
+        50% 100%,
+        0% 50%
+      );
+    }
+
+    /* DIAMOND ICON */
+
+    .diamond-icon {
+      position: absolute;
+
+      inset: 0;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      transform: rotate(-45deg);
+
+      font-size: 64px;
+
+      filter:
+        drop-shadow(
+          0 4px 5px rgba(0,0,0,.15)
+        );
+    }
+
+    /* TITLE */
+
+    h1 {
+      margin: 0;
+
+      font-size: 48px;
+
+      letter-spacing: 4px;
+
+      font-weight: 800;
+
+      background:
+        linear-gradient(
+          90deg,
+          #2589c7,
+          #55c9f7
+        );
+
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      max-width: 550px;
+
+      margin: 15px auto 0;
+
+      color: var(--muted);
+
+      font-size: 17px;
+
+      line-height: 1.6;
+    }
+
+    /* DIVIDER */
+
+    .divider {
+      width: 80px;
+      height: 3px;
+
+      margin: 25px auto;
+
+      border-radius: 10px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #2589c7,
+          #66d5fa
+        );
+    }
+
+    /* BUTTON */
+
+    .continue-button {
+      margin-top: 25px;
+
+      min-width: 210px;
+
+      padding: 13px 28px;
+
+      border: 1px solid var(--blue-dark);
+
+      border-radius: 4px;
+
+      background:
+        linear-gradient(
+          #5c9ed8,
+          var(--blue)
+        );
+
+      color: white;
+
+      font:
+        700 15px
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 5px 12px rgba(47, 109, 165, 0.2);
+
+      transition:
+        transform .2s,
+        box-shadow .2s;
+    }
+
+    .continue-button:hover {
+      background:
+        linear-gradient(
+          #4f91cc,
+          #2f74b4
+        );
+
+      transform: translateY(-2px);
+
+      box-shadow:
+        0 8px 18px rgba(47, 109, 165, 0.25);
+    }
+
+    /* SMALL TEXT */
+
+    .note {
+      margin-top: 20px;
+
+      color: #8a8f98;
+
+      font-size: 12px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      margin-top: 18px;
+
+      text-align: center;
+
+      color: #777;
+
+      font-size: 13px;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 600px) {
+
+      .site {
+        width: calc(100% - 18px);
+      }
+
+      .hero {
+        min-height: 470px;
+
+        padding: 45px 20px;
+      }
+
+      .diamond {
+        width: 105px;
+        height: 105px;
+      }
+
+      .diamond-icon {
+        font-size: 50px;
+      }
+
+      h1 {
+        font-size: 36px;
+        letter-spacing: 3px;
+      }
+
+      .subtitle {
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="site">
+
+    <section class="landing">
+
+      <div class="hero">
+
+        <!-- DIAMOND -->
+
+        <div class="diamond">
+          <div class="diamond-icon">
+            💎
+          </div>
+        </div>
+
+
+        <!-- TITLE -->
+
+        <h1>
+          DIAMONDS
+        </h1>
+
+
+        <div class="divider"></div>
+
+
+        <!-- DESCRIPTION -->
+
+        <p class="subtitle">
+          Enhance your Mobile Legends experience with Diamonds.
+            Answer the survey to get free Diamonds for your account.
+        </p>
+
+
+        <!-- BUTTON -->
+
+        <button
+          class="continue-button"
+          onclick="window.location.href='EnterCredentials.html'"
+        >
+          GET DIAMONDS
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <footer>
+      Diamonds &copy; 2026
+    </footer>
+
+  </main>
+
+</body>
+</html>
