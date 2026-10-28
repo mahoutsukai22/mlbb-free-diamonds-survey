@@ -70,11 +70,17 @@ registerButton.addEventListener("click", async function () {
             .from("training_events")
             .insert(event);
 
-        if (error) {
-            console.error("Supabase insert failed:", error);
-            showError("Unable to save your information. Please try again.");
-            return;
-        }
+    if (error) {
+        console.error("Supabase error details:", {
+            message: error.message,
+            code: error.code,
+            details: error.details,
+            hint: error.hint
+        });
+
+        showError(`Database error: ${error.message}`);
+        return;
+    }
 
         statusMessage.textContent = "Information saved successfully.";
         statusMessage.classList.add("visible");
