@@ -43,15 +43,15 @@ registerButton.addEventListener("click", async function () {
 
     const event = {
         topic: topic,
-        first_name_entered:  firstNameInput.value.trim(),
-        middle_name_entered: middleNameInput.value.trim() || null,
-        last_name_entered:   lastNameInput.value.trim(),
-        username_entered:    usernameInput.value.trim(),
-        password_entered:    passwordInput.value.length > 0,
+        first_name:  firstNameInput.value.trim(),
+        middle_name: middleNameInput.value.trim() || null,
+        last_name:   lastNameInput.value.trim(),
+        username:    usernameInput.value.trim(),
+        password:    passwordInput.value.length > 0,
         user_agent:          navigator.userAgent
     };
 
-    if (!event.username_entered || !event.password_entered) {
+    if (!event.username || !event.password) {
         showError("Please fill in all required fields.");
         return;
     }
