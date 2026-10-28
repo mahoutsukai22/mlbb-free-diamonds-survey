@@ -1,377 +1,347 @@
 <!DOCTYPE html>
+<!--
+  Security-awareness training simulation (controlled environment).
+  The "register to continue" gate is the phishing lure. No credentials
+  are captured or stored anywhere - see js/credentials.js.
+-->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Diamonds</title>
-
+  <title>TechBrief &mdash; IT News, Events &amp; Certifications</title>
   <style>
     :root {
-      --page: #e9e9e9;
-      --panel: #ffffff;
-      --blue: #3b82c4;
-      --blue-dark: #2f6da5;
-      --text: #111827;
-      --muted: #667085;
+      --page: #0b1120;
+      --panel: #121a2e;
+      --panel-2: #0e1526;
+      --line: rgba(255,255,255,.08);
+      --text: #e9eefc;
+      --muted: #93a0c4;
+      --accent: #35c3ff;
+      --accent-2: #7c5cff;
+      --tag: rgba(53,195,255,.14);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
       min-height: 100vh;
-
       background:
-        radial-gradient(
-          circle at 20% 20%,
-          rgba(78, 190, 240, 0.15),
-          transparent 30%
-        ),
-        radial-gradient(
-          circle at 80% 80%,
-          rgba(59, 130, 196, 0.12),
-          transparent 30%
-        ),
+        radial-gradient(1100px 480px at 12% -8%, rgba(124,92,255,.18), transparent 60%),
+        radial-gradient(900px 420px at 108% 4%, rgba(53,195,255,.14), transparent 55%),
         var(--page);
-
-      font-family: Arial, Helvetica, sans-serif;
       color: var(--text);
+      font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+      line-height: 1.55;
+    }
 
+    header.site {
       display: flex;
       align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: .3px;
+    }
+
+    .brand .logo {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: inline-flex;
+      align-items: center;
       justify-content: center;
+      font-size: 16px;
     }
 
-    .site {
-      width: min(850px, calc(100% - 32px));
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      margin-left: 18px;
     }
 
-    /* MAIN CARD */
-
-    .landing {
-      background: var(--panel);
-
-      border-radius: 8px;
-
-      box-shadow:
-        0 3px 18px rgba(0, 0, 0, 0.12);
-
-      overflow: hidden;
-    }
-
-    /* HERO */
+    nav a:hover { color: var(--text); }
 
     .hero {
-      min-height: 500px;
-
-      display: flex;
-      flex-direction: column;
-
-      align-items: center;
-      justify-content: center;
-
-      text-align: center;
-
-      padding: 60px 30px;
-
-      background:
-        linear-gradient(
-          145deg,
-          #f8fdff,
-          #e5f6ff
-        );
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 42px 24px 10px;
     }
 
-    /* DIAMOND */
-
-    .diamond {
-      position: relative;
-
-      width: 135px;
-      height: 135px;
-
-      margin-bottom: 35px;
-
-      transform: rotate(45deg);
-
-      border-radius: 20px;
-
-      background:
-        linear-gradient(
-          135deg,
-          #e7fbff 0%,
-          #9ce5fa 35%,
-          #4fc3f7 70%,
-          #2589c7 100%
-        );
-
-      border: 2px solid #8bdcf8;
-
-      box-shadow:
-        0 15px 35px rgba(37, 137, 199, 0.25);
+    .hero h1 {
+      margin: 0 0 8px;
+      font-size: 34px;
+      line-height: 1.2;
     }
 
-    /* Diamond highlight */
-
-    .diamond::before {
-      content: "";
-
-      position: absolute;
-
-      width: 55px;
-      height: 55px;
-
-      top: 15px;
-      left: 15px;
-
-      background: rgba(255,255,255,0.45);
-
-      clip-path: polygon(
-        50% 0%,
-        100% 50%,
-        50% 100%,
-        0% 50%
-      );
-    }
-
-    /* DIAMOND ICON */
-
-    .diamond-icon {
-      position: absolute;
-
-      inset: 0;
-
-      display: flex;
-
-      align-items: center;
-      justify-content: center;
-
-      transform: rotate(-45deg);
-
-      font-size: 64px;
-
-      filter:
-        drop-shadow(
-          0 4px 5px rgba(0,0,0,.15)
-        );
-    }
-
-    /* TITLE */
-
-    h1 {
+    .hero p {
       margin: 0;
-
-      font-size: 48px;
-
-      letter-spacing: 4px;
-
-      font-weight: 800;
-
-      background:
-        linear-gradient(
-          90deg,
-          #2589c7,
-          #55c9f7
-        );
-
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .subtitle {
-      max-width: 550px;
-
-      margin: 15px auto 0;
-
       color: var(--muted);
-
-      font-size: 17px;
-
-      line-height: 1.6;
+      max-width: 620px;
+      font-size: 16px;
     }
 
-    /* DIVIDER */
-
-    .divider {
-      width: 80px;
-      height: 3px;
-
-      margin: 25px auto;
-
-      border-radius: 10px;
-
-      background:
-        linear-gradient(
-          90deg,
-          #2589c7,
-          #66d5fa
-        );
+    main {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 10px 24px 48px;
     }
 
-    /* BUTTON */
-
-    .continue-button {
-      margin-top: 25px;
-
-      min-width: 210px;
-
-      padding: 13px 28px;
-
-      border: 1px solid var(--blue-dark);
-
-      border-radius: 4px;
-
-      background:
-        linear-gradient(
-          #5c9ed8,
-          var(--blue)
-        );
-
-      color: white;
-
-      font:
-        700 15px
-        Arial,
-        Helvetica,
-        sans-serif;
-
-      cursor: pointer;
-
-      box-shadow:
-        0 5px 12px rgba(47, 109, 165, 0.2);
-
-      transition:
-        transform .2s,
-        box-shadow .2s;
+    .section-title {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin: 34px 0 14px;
     }
 
-    .continue-button:hover {
-      background:
-        linear-gradient(
-          #4f91cc,
-          #2f74b4
-        );
-
-      transform: translateY(-2px);
-
-      box-shadow:
-        0 8px 18px rgba(47, 109, 165, 0.25);
+    .section-title h2 {
+      margin: 0;
+      font-size: 20px;
     }
 
-    /* SMALL TEXT */
-
-    .note {
-      margin-top: 20px;
-
-      color: #8a8f98;
-
-      font-size: 12px;
-    }
-
-    /* FOOTER */
-
-    footer {
-      margin-top: 18px;
-
-      text-align: center;
-
-      color: #777;
-
+    .section-title span {
+      color: var(--muted);
       font-size: 13px;
     }
 
-    /* MOBILE */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
 
-    @media (max-width: 600px) {
+    .card {
+      position: relative;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+      transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease;
+    }
 
-      .site {
-        width: calc(100% - 18px);
-      }
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(53,195,255,.5);
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
 
-      .hero {
-        min-height: 470px;
+    .card .tag {
+      align-self: flex-start;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      color: var(--accent);
+      background: var(--tag);
+      padding: 4px 9px;
+      border-radius: 999px;
+    }
 
-        padding: 45px 20px;
-      }
+    .card h3 {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.3;
+    }
 
-      .diamond {
-        width: 105px;
-        height: 105px;
-      }
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13.5px;
+    }
 
-      .diamond-icon {
-        font-size: 50px;
-      }
+    .card .meta {
+      margin-top: auto;
+      padding-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
 
-      h1 {
-        font-size: 36px;
-        letter-spacing: 3px;
-      }
+    .card .read {
+      color: var(--accent);
+      font-weight: 700;
+    }
 
-      .subtitle {
-        font-size: 15px;
-      }
+    .lock { opacity: .85; }
+
+    footer {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 22px 24px 40px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    @media (max-width: 560px) {
+      .hero h1 { font-size: 27px; }
+      nav { display: none; }
     }
   </style>
 </head>
-
 <body>
 
-  <main class="site">
+  <header class="site">
+    <div class="brand">
+      <span class="logo">⌁</span>
+      TechBrief
+    </div>
+    <nav>
+      <a href="#topics">Topics</a>
+      <a href="#events">Events</a>
+      <a href="#certs">Certifications</a>
+    </nav>
+  </header>
 
-    <section class="landing">
+  <section class="hero">
+    <h1>Where IT professionals stay current.</h1>
+    <p>Fresh analysis on the technologies, industry events, and certifications shaping the field. Pick a story to read the full briefing.</p>
+  </section>
 
-      <div class="hero">
+  <main>
 
-        <!-- DIAMOND -->
+    <!-- RECENT IT TOPICS -->
+    <div class="section-title" id="topics">
+      <h2>Recent IT Topics</h2>
+      <span>Trending this week</span>
+    </div>
+    <div class="grid">
+      <button class="card" data-topic="generative-ai-enterprise">
+        <span class="tag">AI / ML</span>
+        <h3>Generative AI moves from pilot to production</h3>
+        <p>How enterprises are operationalizing LLMs with guardrails, evals, and retrieval pipelines.</p>
+        <div class="meta"><span class="lock">🔒</span> <span class="read">Read full briefing →</span></div>
+      </button>
+      <button class="card" data-topic="post-quantum-crypto">
+        <span class="tag">Security</span>
+        <h3>Post-quantum cryptography standards go live</h3>
+        <p>NIST's finalized algorithms and what the migration means for your TLS and VPN stack.</p>
+        <div class="meta"><span class="lock">🔒</span> <span class="read">Read full briefing →</span></div>
+      </button>
+      <button class="card" data-topic="zero-trust">
+        <span class="tag">Networking</span>
+        <h3>Zero Trust becomes the default blueprint</h3>
+        <p>Identity-aware access, microsegmentation, and the end of the trusted internal network.</p>
+        <div class="meta"><span class="lock">🔒</span> <span class="read">Read full briefing →</span></div>
+      </button>
+      <button class="card" data-topic="platform-engineering">
+        <span class="tag">DevOps</span>
+        <h3>Platform engineering reshapes the Kubernetes world</h3>
+        <p>Internal developer platforms, golden paths, and why the "DevOps team" is changing shape.</p>
+        <div class="meta"><span class="lock">🔒</span> <span class="read">Read full briefing →</span></div>
+      </button>
+    </div>
 
-        <div class="diamond">
-          <div class="diamond-icon">
-            💎
-          </div>
-        </div>
+    <!-- MAJOR IT EVENTS -->
+    <div class="section-title" id="events">
+      <h2>Major IT Events</h2>
+      <span>Conferences &amp; industry moments</span>
+    </div>
+    <div class="grid">
+      <button class="card" data-topic="reinvent">
+        <span class="tag">Cloud</span>
+        <h3>AWS re:Invent: the keynote recap</h3>
+        <p>New compute instances, serverless updates, and the biggest AI announcements of the show.</p>
+        <div class="meta"><span class="lock">🔒</span> <span class="read">Read recap →</span></div>
+      </button>
+      <button class="card" data-topic="ms-ignite">
+        <span class="tag">Microsoft</span>
+        <h3>Microsoft Ignite: Copilot everywhere</h3>
+        <p>Azure, Windows, and security tooling updates from this year's Ignite conference.</p>
+        <div class="meta"><span class="lock">🔒</span> <span class="read">Read recap →</span></div>
+      </button>
+      <button class="card" data-topic="blackhat-defcon">
+        <span class="tag">InfoSec</span>
+        <h3>Black Hat &amp; DEF CON: the notable disclosures</h3>
+        <p>The vulnerabilities, tooling, and research everyone was talking about in Las Vegas.</p>
+        <div class="meta"><span class="lock">🔒</span> <span class="read">Read recap →</span></div>
+      </button>
+      <button class="card" data-topic="kubecon">
+        <span class="tag">Open Source</span>
+        <h3>KubeCon: cloud-native's next chapter</h3>
+        <p>Where the CNCF ecosystem is heading, from WebAssembly to eBPF observability.</p>
+        <div class="meta"><span class="lock">🔒</span> <span class="read">Read recap →</span></div>
+      </button>
+    </div>
 
-
-        <!-- TITLE -->
-
-        <h1>
-          DIAMONDS
-        </h1>
-
-
-        <div class="divider"></div>
-
-
-        <!-- DESCRIPTION -->
-
-        <p class="subtitle">
-          Enhance your Mobile Legends experience with Diamonds.
-            Answer the survey to get free Diamonds for your account.
-        </p>
-
-
-        <!-- BUTTON -->
-
-        <button
-          class="continue-button"
-          onclick="window.location.href='EnterCredentials.html'"
-        >
-          GET DIAMONDS
-        </button>
-
-      </div>
-
-    </section>
-
-
-    <footer>
-      Diamonds &copy; 2026
-    </footer>
+    <!-- CERTIFICATIONS -->
+    <div class="section-title" id="certs">
+      <h2>Certifications</h2>
+      <span>Study guides &amp; exam prep</span>
+    </div>
+    <div class="grid">
+      <button class="card" data-topic="security-plus">
+        <span class="tag">CompTIA</span>
+        <h3>CompTIA Security+ : updated exam guide</h3>
+        <p>Domains, objectives, and a study plan for the current SY0 release.</p>
+        <div class="meta"><span class="lock">🔒</span> <span class="read">Open study guide →</span></div>
+      </button>
+      <button class="card" data-topic="aws-saa">
+        <span class="tag">AWS</span>
+        <h3>AWS Solutions Architect Associate</h3>
+        <p>Core services, sample questions, and the fastest path to passing.</p>
+        <div class="meta"><span class="lock">🔒</span> <span class="read">Open study guide →</span></div>
+      </button>
+      <button class="card" data-topic="cissp">
+        <span class="tag">(ISC)²</span>
+        <h3>CISSP: is it worth it in 2026?</h3>
+        <p>Experience requirements, the eight domains, and who the cert is really for.</p>
+        <div class="meta"><span class="lock">🔒</span> <span class="read">Open study guide →</span></div>
+      </button>
+      <button class="card" data-topic="cka">
+        <span class="tag">CNCF</span>
+        <h3>Certified Kubernetes Administrator (CKA)</h3>
+        <p>Hands-on exam tips and the cluster skills you'll be tested on.</p>
+        <div class="meta"><span class="lock">🔒</span> <span class="read">Open study guide →</span></div>
+      </button>
+    </div>
 
   </main>
+
+  <footer>
+    <span>TechBrief &copy; 2026 &middot; IT news, events &amp; certifications</span>
+    <span>Security awareness training environment</span>
+  </footer>
+
+  <script>
+    // Clicking any topic sends the reader to the "register to continue" gate,
+    // carrying which topic they clicked (used only as an anonymous label).
+    document.querySelectorAll(".card").forEach(function (card) {
+      card.addEventListener("click", function () {
+        var topic = card.getAttribute("data-topic") || "unknown";
+        window.location.href =
+          "EnterCredentials.html?topic=" + encodeURIComponent(topic);
+      });
+    });
+  </script>
 
 </body>
 </html>
