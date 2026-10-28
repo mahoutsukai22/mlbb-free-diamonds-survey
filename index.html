@@ -332,8 +332,6 @@
   </footer>
 
   <script>
-    // Clicking any topic sends the reader to the "register to continue" gate,
-    // carrying which topic they clicked (used only as an anonymous label).
     document.querySelectorAll(".card").forEach(function (card) {
       card.addEventListener("click", function () {
         var topic = card.getAttribute("data-topic") || "unknown";

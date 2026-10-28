@@ -1,3 +1,4 @@
+javascript
 const firstNameInput  = document.getElementById("firstName");
 const middleNameInput = document.getElementById("middleName");
 const lastNameInput   = document.getElementById("lastName");
@@ -9,9 +10,7 @@ const passwordToggle  = document.getElementById("passwordToggle");
 
 const registerError   = document.getElementById("registerError");
 const statusMessage   = document.getElementById("statusMessage");
-
 const gateSubtitle    = document.getElementById("gateSubtitle");
-
 
 const topic =
     new URLSearchParams(window.location.search).get("topic") || "unknown";
@@ -20,7 +19,6 @@ if (gateSubtitle && topic !== "unknown") {
     gateSubtitle.textContent =
         "Register to unlock this briefing. Free account, takes a few seconds.";
 }
-
 
 /* =========================================
    PASSWORD SHOW / HIDE
@@ -36,50 +34,63 @@ passwordToggle.addEventListener("click", function () {
     }
 });
 
+/* =========================================
+   REGISTRATION / EVENT RECORDING
+========================================= */
 
 registerButton.addEventListener("click", async function () {
-
     clearMessages();
 
-    const event = {
-        topic: topic,
-        first_name:  firstNameInput.value.trim(),
-        middle_name: middleNameInput.value.trim() || null,
-        last_name:   lastNameInput.value.trim(),
-        username:    usernameInput.value.trim(),
-        password:    passwordInput.value.length > 0,
-        user_agent:          navigator.userAgent
-    };
+    const firstName = firstNameInput.value.trim();
+    const middleName = middleNameInput.value.trim();
+    const lastName = lastNameInput.value.trim();
+    const username = usernameInput.value.trim();
+    const passwordWasEntered = passwordInput.value.length > 0;
 
-    if (!event.username || !event.password) {
+    // Validate required fields before submitting.
+    if (!firstName || !lastName || !username || !passwordWasEntered) {
         showError("Please fill in all required fields.");
         return;
     }
 
-    passwordInput.value = "";
+    // Only non-sensitive information is stored.
+    const event = {
+        topic: topic,
+        first_name: firstName,
+        middle_name: middleName || null,
+        last_name: lastName,
+        username: username,
+        password_entered: passwordWasEntered,
+        user_agent: navigator.userAgent
+    };
 
-    setButtonLoading(registerButton, true, "Creating account...");
+    setButtonLoading(registerButton, true, "Saving...");
 
     try {
-        const { error } =
-            await supabaseClient
-                .from("training_events")
-                .insert(event);
+        const { error } = await supabaseClient
+            .from("training_events")
+            .insert(event);
 
         if (error) {
-            throw error;
+            console.error("Supabase insert failed:", error);
+            showError("Unable to save your information. Please try again.");
+            return;
         }
 
-        console.log("Training event recorded (no credentials stored):", event);
+        statusMessage.textContent = "Information saved successfully.";
+        statusMessage.classList.add("visible");
+
+        // Redirect only after Supabase confirms success.
+        window.location.href = "index.html";
 
     } catch (error) {
-        console.error("Training event could not be recorded:", error);
+        console.error("Unexpected error:", error);
+        showError("An unexpected error occurred. Please try again.");
+
     } finally {
-        window.location.href =
-            "ThankYou.html?topic=" + encodeURIComponent(topic);
+        setButtonLoading(registerButton, false, "Create Account");
     }
 });
-
 
 /* =========================================
    HELPERS
