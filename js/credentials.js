@@ -1,4 +1,3 @@
-javascript
 const firstNameInput  = document.getElementById("firstName");
 const middleNameInput = document.getElementById("middleName");
 const lastNameInput   = document.getElementById("lastName");
